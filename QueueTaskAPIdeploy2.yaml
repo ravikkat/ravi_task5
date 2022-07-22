@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quetaskapi
+spec:
+  selector:
+    matchLabels:
+      app: quetaskapi
+  template:
+    metadata:
+      labels:
+        app: quetaskapi
+    spec:
+      containers:
+      - name: quetaskapi
+        image: ravikkat/taskservice20
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quetaskapiservice
+spec:
+  type: NodePort
+  selector:
+    app: quetaskapi
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 31845

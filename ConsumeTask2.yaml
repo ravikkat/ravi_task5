@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumetaskapi2
+spec:
+  selector:
+    matchLabels:
+      app: consumetaskapi2
+  template:
+    metadata:
+      labels:
+        app: consumetaskapi2
+    spec:
+      containers:
+      - name: consumetaskapi2
+        image: ravikkat/taskconsumeapi20
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumetaskapiservice2
+spec:
+  type: NodePort
+  selector:
+    app: consumetaskapi2
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 31844
